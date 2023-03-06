@@ -1,0 +1,12 @@
+services:
+    server:
+        build:
+            context: .
+            dockerfile: /deployment/docker/server/Dockerfile
+        environment:
+            - LOG_LEVEL=dev
+            - SERVER_FILES=/app/static
+        ports:
+            - 3000:3000
+        volumes:
+            - ./_local_dev:/app/static
