@@ -1,12 +1,21 @@
 services:
-    server:
-        build:
-            context: .
-            dockerfile: /deployment/docker/server/Dockerfile
-        environment:
-            - LOG_LEVEL=dev
-            - SERVER_FILES=/app/static
-        ports:
-            - 3000:3000
-        volumes:
-            - ./_local_dev:/app/static
+  server:
+    build:
+      context: .
+      dockerfile: /deployment/docker/server/Dockerfile
+    environment:
+      - LOG_LEVEL=dev
+      - SERVER_FILES=/app/static
+    ports:
+      - 3000:3000
+    volumes:
+      - ./_local_dev:/app/static
+  admin-ui-dev:
+    build:
+      context: .
+      dockerfile: /cmd/admin-ui/Dockerfile.dev
+    ports:
+      - 5173:5173
+    volumes:
+      - ./cmd/admin-ui:/app
+      - /app/node_modules/

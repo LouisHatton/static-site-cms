@@ -1,0 +1,11 @@
+FROM node:19.7.0-buster
+
+ENV NODE_ENV=development
+
+WORKDIR /app
+
+COPY ./cmd/admin-ui/package*.json .
+
+RUN npm install
+
+CMD npm run dev
