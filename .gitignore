@@ -3,4 +3,5 @@
 _local_dev
 
 *.zip
+!tests/*.zip
 .vscode
