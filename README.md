@@ -15,7 +15,7 @@ To run the application in a container, run the following commands:
 docker compose up dev --build (-d)
 ```
 
-This will start the svelte dev server on port 5173, the go server on port 8000 and the static site will be served on port 3000.
+This will start the svelte dev server on port 5173, the go server on port 8080 and the static site will be served on port 3000.
 
 The static site is served from the `_local_dev` directory, which is mounted as a volume into the container.
 

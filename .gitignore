@@ -1,3 +1,6 @@
 *.env
 
 _local_dev
+
+*.zip
+.vscode
