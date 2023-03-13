@@ -1,5 +1,6 @@
 services:
   dev:
+    container_name: server-dev
     build:
       context: .
       dockerfile: /deployment/docker/server/Dockerfile
@@ -10,9 +11,25 @@ services:
       - 3000:3000
     links:
       - admin-ui-dev
+      - admin-server-dev
     volumes:
       - ./_local_dev:/http
+
+  admin-server-dev:
+    container_name: admin-server-dev
+    build:
+      context: .
+      dockerfile: /deployment/docker/admin-server/Dockerfile
+    environment:
+      - LOG_LEVEL=dev
+      - SERVER_FILES=/http
+    ports:
+      - 8080:8080
+    volumes:
+      - ./_local_dev:/http
+
   admin-ui-dev:
+    container_name: admin-ui-dev
     build:
       context: .
       dockerfile: /cmd/admin-ui/Dockerfile.dev

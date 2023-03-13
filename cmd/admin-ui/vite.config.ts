@@ -13,6 +13,13 @@ export default defineConfig({
 		port: 5173,
 		watch: {
 			usePolling: true
+		},
+		proxy: {
+			'/api': {
+				target: 'http://admin-server-dev:8080',
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/api/, '')
+			}
 		}
 	}
 });

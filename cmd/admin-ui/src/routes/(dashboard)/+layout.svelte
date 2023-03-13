@@ -22,7 +22,7 @@
 	<Sidebar>
 		<SidebarWrapper class="h-full">
 			<SidebarGroup>
-				<SidebarItem label="Dashboard">
+				<SidebarItem label="Dashboard" href="/">
 					<svelte:fragment slot="icon">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +59,7 @@
 							/></svg
 						>
 					</svelte:fragment>
-					<SidebarDropdownItem label="Edit Content" />
+					<SidebarDropdownItem label="Edit Content" href="/pages" />
 					<SidebarDropdownItem label="Modify Routes" />
 					<SidebarDropdownItem label="SEO" />
 				</SidebarDropdownWrapper>
@@ -140,7 +140,7 @@
 			</SidebarGroup>
 		</SidebarWrapper>
 	</Sidebar>
-	<main class="flex-1 m-2">
+	<main class="flex-1 m-5">
 		<slot class="flex-1" />
 	</main>
 </body>
