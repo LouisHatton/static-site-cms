@@ -3,7 +3,7 @@ services:
     container_name: server-dev
     build:
       context: .
-      dockerfile: /deployment/docker/server/Dockerfile
+      dockerfile: ./deployment/docker/server/Dockerfile
     environment:
       - LOG_LEVEL=dev
       - SERVER_FILES=/http
@@ -19,7 +19,7 @@ services:
     container_name: admin-server-dev
     build:
       context: .
-      dockerfile: /deployment/docker/admin-server/Dockerfile
+      dockerfile: ./deployment/docker/admin-server/Dockerfile
     environment:
       - LOG_LEVEL=dev
       - SERVER_FILES=/http
@@ -32,7 +32,7 @@ services:
     container_name: admin-ui-dev
     build:
       context: .
-      dockerfile: /cmd/admin-ui/Dockerfile.dev
+      dockerfile: ./cmd/admin-ui/Dockerfile.dev
     ports:
       - 5173:5173
     volumes:
