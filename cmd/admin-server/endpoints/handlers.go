@@ -10,6 +10,16 @@ import (
 
 var logger = log.Logger()
 
+// Main route for when user hits /
+func MainHandler(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case "GET":
+		logger.Info("Received main route, for testing")
+	}
+}
+
+// Upload Zip endpoint for when a user uploads their
+// zip containing the HTML files
 func UploadHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "POST":
