@@ -50,14 +50,13 @@ func GenerateDirectoryMap(root string) (DirectoryMap, error) {
 	}
 
 	dirMap := DirectoryMap{
-		Root:   root,
-		Routes: []Route{{Path: "/", Files: files}},
+		Root: root,
+		Routes: []Route{
+			{Path: "/", Files: files},
+		},
 	}
 
-	for {
-		if len(requiredFolders) == 0 {
-			break
-		}
+	for len(requiredFolders) > 0 {
 
 		currentFolder := requiredFolders[0]
 		requiredFolders = requiredFolders[1:]
