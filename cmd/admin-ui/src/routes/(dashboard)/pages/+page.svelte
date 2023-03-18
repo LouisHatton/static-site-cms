@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Alert, Button, Dropzone, Fileupload, Label, Modal, Spinner } from 'flowbite-svelte';
+	import { Alert, Button, Dropzone, Modal, Spinner } from 'flowbite-svelte';
 	import PageItem from './PageItem.svelte';
 	import type { PageData } from './$types';
 	import { invalidateAll } from '$app/navigation';
