@@ -20,5 +20,4 @@ func TestConnect(t *testing.T) {
 	if err != nil {
 		t.Errorf("failed to close connection: " + err.Error())
 	}
-	os.Remove("database.sqlite")
 }

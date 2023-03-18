@@ -3,15 +3,11 @@ package kv
 import (
 	"database/sql"
 	"os"
-	"sync"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
-var once sync.Once
-var connection *sql.DB
-
-func connect() {
+func connect() *sql.DB {
 	fileName := os.Getenv("KV_SQLITE_FILE_NAME")
 	if fileName == "" {
 		fileName = "database.sqlite"
@@ -25,10 +21,9 @@ func connect() {
 		panic(err)
 	}
 
-	connection = sqlite
+	return sqlite
 }
 
 func sqlDb() *sql.DB {
-	once.Do(connect)
-	return connection
+	return connect()
 }

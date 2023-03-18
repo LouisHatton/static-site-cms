@@ -6,13 +6,14 @@ import (
 
 // Forms and checks the connection to the database and returns a kvStore object
 func Connect(tableName string) (KvStore, error) {
-	err := sqlDb().Ping()
+	connection := sqlDb()
+	err := connection.Ping()
 	if err != nil {
 		return KvStore{}, fmt.Errorf("failed to ping database connection: " + err.Error())
 	}
 
 	store := KvStore{
-		db:        sqlDb(),
+		db:        connection,
 		tableName: tableName,
 	}
 
@@ -22,7 +23,7 @@ func Connect(tableName string) (KvStore, error) {
 	return store, nil
 }
 
-// Closes the connection to the database
+// Closes the connection to the underlying database
 func (kv *KvStore) Close() error {
 	return kv.db.Close()
 }
