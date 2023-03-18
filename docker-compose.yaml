@@ -10,7 +10,6 @@ services:
     ports:
       - 3000:3000
     links:
-      - admin-ui-dev
       - admin-server-dev
     volumes:
       - ./_local_dev:/http

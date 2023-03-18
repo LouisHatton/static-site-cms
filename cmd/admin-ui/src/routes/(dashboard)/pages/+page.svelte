@@ -1,7 +1,10 @@
 <script lang="ts">
 	import { Alert, Button, Dropzone, Fileupload, Label, Modal, Spinner } from 'flowbite-svelte';
 	import PageItem from './PageItem.svelte';
+	import type { PageData } from './$types';
+	import { invalidateAll } from '$app/navigation';
 
+	export let data: PageData;
 	let fileupload: FileList;
 	let uploadSuccess: boolean | null = null;
 	let uploading = false;
@@ -30,6 +33,7 @@
 		} finally {
 			uploading = false;
 			newFullSiteModal = false;
+			invalidateAll();
 		}
 	};
 </script>
@@ -103,7 +107,10 @@
 	</div>
 </Modal>
 
-<PageItem />
-<PageItem />
-<PageItem />
-<PageItem />
+<div class="flex flex-col gap-y-6 mt-10">
+	{#each data.siteStructure.routes as route}
+		{#if route.files.includes('index.html')}
+			<PageItem {route} />
+		{/if}
+	{/each}
+</div>
