@@ -1,14 +1,8 @@
 package kv
 
 import (
-	"database/sql"
 	"fmt"
 )
-
-type KvStore struct {
-	db        *sql.DB
-	tableName string
-}
 
 // Forms and checks the connection to the database and returns a kvStore object
 func Connect(tableName string) (KvStore, error) {
