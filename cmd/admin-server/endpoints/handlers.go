@@ -46,24 +46,26 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetSiteStructure(w http.ResponseWriter, r *http.Request) {
-	switch r.Method {
-	case http.MethodGet:
-		logger.Info("Received get site structure request")
-		siteMap, err := files.GenerateDirectoryMap(utils.GetEnv("SERVER_FILES", "/http"))
-		if err != nil {
-			logger.Error("error generating directory map: ", err.Error())
-			http.Error(w, "error generating dir map", http.StatusInternalServerError)
-			return
-		}
-
-		data, err := json.Marshal(siteMap)
-		if err != nil {
-			logger.Error("error marshaling data: ", err.Error())
-			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-			return
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		w.Write(data)
+	if r.Method != http.MethodGet {
+		return
 	}
+
+	logger.Info("Received get site structure request")
+	siteMap, err := files.GenerateDirectoryMap(utils.GetEnv("SERVER_FILES", "/http"))
+	if err != nil {
+		logger.Error("error generating directory map: ", err.Error())
+		http.Error(w, "error generating dir map", http.StatusInternalServerError)
+		return
+	}
+
+	data, err := json.Marshal(siteMap)
+	if err != nil {
+		logger.Error("error marshaling data: ", err.Error())
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
+
 }
