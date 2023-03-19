@@ -8,6 +8,21 @@ import (
 	"github.com/LouisHatton/static-site-cms/pkg/kv"
 )
 
+var store *kv.KvStore
+
+func TestConnect(t *testing.T) {
+	os.Setenv("KV_SQLITE_FILE_PATH", "./")
+	connection, err := kv.Connect("test")
+	if err != nil {
+		t.Errorf("failed to connect to kv store: " + err.Error())
+	}
+	store = &connection
+	err = store.Close()
+	if err != nil {
+		t.Errorf("failed to close connection: " + err.Error())
+	}
+}
+
 func TestInterface(t *testing.T) {
 	os.Setenv("KV_SQLITE_FILE_PATH", "./")
 	connection, _ := kv.Connect("test")
@@ -44,4 +59,8 @@ func TestInterface(t *testing.T) {
 	if val.LastUpdated.Sub(newVal.LastUpdated).Abs().Nanoseconds() != 0 {
 		t.Errorf("get result 'time' does not match, value:%s, newValue: %s", val.LastUpdated, newVal.LastUpdated)
 	}
+}
+
+func TestClearDatabase(t *testing.T) {
+	os.Remove("database.sqlite")
 }
