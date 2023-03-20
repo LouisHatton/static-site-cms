@@ -1,11 +1,13 @@
 package endpoints
 
 import (
+	"encoding/json"
 	"net/http"
 	"os"
 
 	"github.com/LouisHatton/static-site-cms/pkg/files"
 	"github.com/LouisHatton/static-site-cms/pkg/log"
+	"github.com/LouisHatton/static-site-cms/pkg/utils"
 )
 
 var logger = log.Logger()
@@ -41,4 +43,29 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		logger.Info("New files unzipped and deployed in /http")
 	}
+}
+
+func GetSiteStructure(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		return
+	}
+
+	logger.Info("Received get site structure request")
+	siteMap, err := files.GenerateDirectoryMap(utils.GetEnv("SERVER_FILES", "/http"))
+	if err != nil {
+		logger.Error("error generating directory map: ", err.Error())
+		http.Error(w, "error generating dir map", http.StatusInternalServerError)
+		return
+	}
+
+	data, err := json.Marshal(siteMap)
+	if err != nil {
+		logger.Error("error marshaling data: ", err.Error())
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
+
 }
