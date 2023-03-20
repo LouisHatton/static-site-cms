@@ -1,13 +1,17 @@
 <script lang="ts">
-	import { Alert, Dropzone, Spinner } from 'flowbite-svelte';
+	import { Alert, Button, Dropzone, Modal, Spinner } from 'flowbite-svelte';
+	import PageItem from './PageItem.svelte';
+	import type { PageData } from './$types';
+	import { invalidateAll } from '$app/navigation';
 
+	export let data: PageData;
 	let fileupload: FileList;
 	let uploadSuccess: boolean | null = null;
 	let uploading = false;
+	let newFullSiteModal = false;
 
 	const onUpload = async () => {
 		uploading = true;
-		console.log(fileupload.length);
 		let file = fileupload.item(fileupload.length - 1);
 		if (file == null) return;
 		if (file.type !== 'application/x-zip-compressed') return;
@@ -28,13 +32,21 @@
 			uploadSuccess = false;
 		} finally {
 			uploading = false;
+			newFullSiteModal = false;
+			invalidateAll();
 		}
 	};
 </script>
 
-<h1 class="text-2xl mb-2">Upload new site</h1>
-
-<p class="mb-6">This will override the current site</p>
+<div class="flex flex-row justify-between items-center mb-4">
+	<div>
+		<h1 class="text-2xl mb-2">Your Site</h1>
+		<p>View and edit the pages for your site</p>
+	</div>
+	<div>
+		<Button on:click={() => (newFullSiteModal = true)}>Upload New Site</Button>
+	</div>
+</div>
 
 {#if uploadSuccess !== null}
 	<Alert color={uploadSuccess ? 'green' : 'red'} class="mb-4">
@@ -56,8 +68,9 @@
 	</Alert>
 {/if}
 
-<div class="max-w-lg">
-	<Dropzone bind:files={fileupload} id="dropzone" on:change={onUpload}>
+<Modal title="Upload New Site" bind:open={newFullSiteModal} autoclose>
+	<p>This will permanently override your current site and cannot be restored</p>
+	<Dropzone bind:files={fileupload} id="dropzone">
 		{#if !uploading}
 			<svg
 				aria-hidden="true"
@@ -81,4 +94,23 @@
 			<div class="text-center"><Spinner /></div>
 		{/if}
 	</Dropzone>
+	<p class="">
+		File Uploaded: <span class="font-semibold font-mono"
+			>{fileupload?.length != 0
+				? fileupload?.item(fileupload?.length - 1)?.name ?? 'No file uploaded'
+				: 'No file uploaded'}</span
+		>
+	</p>
+	<div class="flex flex-row-reverse gap-x-2">
+		<Button on:click={onUpload}>Upload</Button>
+		<Button color="alternative">Close</Button>
+	</div>
+</Modal>
+
+<div class="flex flex-col gap-y-6 mt-10">
+	{#each data.siteStructure.routes as route}
+		{#if route.files.includes('index.html')}
+			<PageItem {route} />
+		{/if}
+	{/each}
 </div>

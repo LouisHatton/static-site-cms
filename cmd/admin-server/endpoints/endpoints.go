@@ -27,7 +27,15 @@ var UploadZip = Endpoint{
 	UploadHandler,
 }
 
+// Used to fetch the json object of the current site structure
+var SiteStructure = Endpoint{
+	"When the UI needs the directory structure",
+	"/site/structure",
+	GetSiteStructure,
+}
+
 var AllEndpoints map[string]Endpoint = map[string]Endpoint{
-	"main":      Default,
-	"uploadZip": UploadZip,
+	"main":          Default,
+	"uploadZip":     UploadZip,
+	"siteStructure": SiteStructure,
 }
