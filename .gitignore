@@ -5,3 +5,7 @@ _local_dev
 *.zip
 !tests/*.zip
 .vscode
+
+# Testing sqlite database
+tests/*/*.sqlite
+tests/*.sqlite
