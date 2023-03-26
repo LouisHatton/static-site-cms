@@ -5,7 +5,7 @@ export interface SiteStructure {
 
 export interface SiteRoute {
 	path: string;
-	files: string[];
+	files: string[] | null;
 }
 
 export const DefaultSiteStructure: SiteStructure = {

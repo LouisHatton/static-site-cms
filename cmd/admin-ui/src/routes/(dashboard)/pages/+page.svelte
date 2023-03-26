@@ -109,7 +109,7 @@
 
 <div class="flex flex-col gap-y-6 mt-10">
 	{#each data.siteStructure.routes as route}
-		{#if route.files.includes('index.html')}
+		{#if route.files?.includes('index.html')}
 			<PageItem {route} />
 		{/if}
 	{/each}

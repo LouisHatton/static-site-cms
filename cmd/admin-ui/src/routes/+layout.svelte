@@ -4,6 +4,6 @@
 </script>
 
 <Header />
-<div class="mt-16">
+<div class="mt-16 w-full">
 	<slot />
 </div>
